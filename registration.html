@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #d4f1f9, #a6e3f3);
+        margin: 0;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px 100px;
+        background: linear-gradient(135deg, #a6e3f3, #87d2eb);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 99;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        font-size: 2rem;
+        color: #ffffff;
+        user-select: none;
+      }
+
+      .navigation a {
+        font-size: 1rem;
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 40px;
+      }
+
+      .navigation a:hover {
+        text-decoration: underline;
+      }
+
+      .btnLogin-popup {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #87d2eb, #6bc3e0);
+        border: none;
+        border-radius: 5px;
+        color: #ffffff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .btnLogin-popup:hover {
+        background: linear-gradient(135deg, #6bc3e0, #87d2eb);
+      }
+
+      .wrapper {
+        position: relative;
+        width: 400px;
+        background: linear-gradient(135deg, #ffffff, #eaf8fd);
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: none;
+      }
+
+      .wrapper.active-popup {
+        display: block;
+      }
+
+      .form-box h2 {
+        text-align: center;
+        color: #6bc3e0;
+        margin-bottom: 20px;
+      }
+
+      .input-box {
+        position: relative;
+        width: 100%;
+        margin: 15px 0;
+      }
+
+      .input-box input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .input-box label {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: #aaa;
+        pointer-events: none;
+        transition: 0.3s;
+      }
+
+      .input-box input:focus ~ label,
+      .input-box input:valid ~ label {
+        top: -10px;
+        left: 10px;
+        font-size: 0.9rem;
+        color: #6bc3e0;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 10px;
+        background: linear-gradient(135deg, #87d2eb, #6bc3e0);
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background: linear-gradient(135deg, #6bc3e0, #87d2eb);
+      }
+
+      .login-register {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 0.9rem;
+        color: #333;
+      }
+
+      .login-register a {
+        color: #6bc3e0;
+        text-decoration: none;
+      }
+
+      .login-register a:hover {
+        text-decoration: underline;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+    <title>Login & Registration</title>
+  </head>
+  <body>
+    <header>
+      <h2 class="logo">MyWebsite</h2>
+      <nav class="navigation">
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+        <button class="btnLogin-popup">Login</button>
+      </nav>
+    </header>
+
+    <div class="wrapper">
+      <div class="form-box login">
+        <h2>Login</h2>
+        <form>
+          <div class="input-box">
+            <input type="email" required />
+            <label>Email</label>
+          </div>
+          <div class="input-box">
+            <input type="password" required />
+            <label>Password</label>
+          </div>
+          <button type="submit" class="btn">Login</button>
+          <div class="login-register">
+            <p>
+              Don't have an account?
+              <a href="#" class="register-link">Register</a>
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-box register hidden">
+        <h2>Register</h2>
+        <form>
+          <div class="input-box">
+            <input type="text" required />
+            <label>Username</label>
+          </div>
+          <div class="input-box">
+            <input type="email" required />
+            <label>Email</label>
+          </div>
+          <div class="input-box">
+            <input type="password" required />
+            <label>Password</label>
+          </div>
+          <button type="submit" class="btn">Register</button>
+          <div class="login-register">
+            <p>
+              Already have an account?
+              <a href="#" class="login-link">Login</a>
+            </p>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const wrapper = document.querySelector(".wrapper");
+      const btnPopup = document.querySelector(".btnLogin-popup");
+      const loginForm = document.querySelector(".form-box.login");
+      const registerForm = document.querySelector(".form-box.register");
+      const loginLink = document.querySelector(".login-link");
+      const registerLink = document.querySelector(".register-link");
+
+      btnPopup.addEventListener("click", () => {
+        wrapper.classList.add("active-popup");
+        loginForm.classList.remove("hidden");
+        registerForm.classList.add("hidden");
+      });
+
+      registerLink.addEventListener("click", () => {
+        loginForm.classList.add("hidden");
+        registerForm.classList.remove("hidden");
+      });
+
+      loginLink.addEventListener("click", () => {
+        registerForm.classList.add("hidden");
+        loginForm.classList.remove("hidden");
+      });
+
+      // Login form submission
+      loginForm.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Login successful!");
+        wrapper.classList.remove("active-popup");
+      });
+
+      // Register form submission
+      registerForm.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Registration successful!");
+        wrapper.classList.remove("active-popup");
+      });
+    </script>
+  </body>
+</html>
